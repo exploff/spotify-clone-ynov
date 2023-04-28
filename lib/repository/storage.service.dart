@@ -3,7 +3,6 @@ import 'package:flutter_media_metadata/flutter_media_metadata.dart';
 import 'package:http/http.dart' as http;
 import 'package:spoticlone/models/song_metadata.dart';
 import 'package:spoticlone/models/track.model.dart';
-import 'package:on_audio_query/on_audio_query.dart';
 
 class StorageService {
   

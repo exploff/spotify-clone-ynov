@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:spoticlone/components/radio_player.component.dart';
-import 'package:spoticlone/models/player_data.model.dart';
 import 'package:spoticlone/models/track.model.dart';
 
 class SearchMusicView extends StatefulWidget {
@@ -48,22 +45,34 @@ class _SearchMusicViewState extends State<SearchMusicView> {
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: const Color.fromARGB(255, 46, 9, 121),
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Center(
-              child: Card(
-                child: 
-                  url != "" ? 
-                    RadioPlayer(audioPlayer: audioPlayer, slogan: slogan, imageUrl: imageUrl, title: title, autoStart: false, withSeekBar: true,)
-                  : const Text('Aucun lien vers le flux audio n\'a été trouvé.'),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color.fromARGB(255, 154, 161, 255),
+              Color.fromARGB(255, 46, 9, 121),
+            ],
+          )
+        ),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Center(
+                child: Card(
+                  child: 
+                    url != "" ? 
+                      RadioPlayer(audioPlayer: audioPlayer, slogan: slogan, imageUrl: imageUrl, title: title, autoStart: false, withSeekBar: true,)
+                    : const Text('Aucun lien vers le flux audio n\'a été trouvé.'),
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

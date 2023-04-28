@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:spoticlone/models/player_data.model.dart';
 
 class RadioPreviewComponent extends StatefulWidget {
@@ -16,22 +14,6 @@ class RadioPreviewComponent extends StatefulWidget {
 class _RadioPreviewComponentState extends State<RadioPreviewComponent> {
   @override
   Widget build(BuildContext context) {
-    // return Center(
-    //   child: Card(
-    //     child: Column(
-    //       mainAxisSize: MainAxisSize.min,
-    //       children: [
-    //         ListTile(
-    //           leading: CircleAvatar(
-    //             child: Image.network(widget.playerData.imageUrl!,),
-    //           ),
-    //           title: Text(widget.playerData.title!),
-    //           subtitle: Text(widget.playerData.slogan!),
-    //         ),
-    //       ],
-    //     ),
-    //   ),
-    // );
     return Container(
       decoration: BoxDecoration(
         border: Border.all(color: const Color.fromARGB(255, 211, 191, 255)),

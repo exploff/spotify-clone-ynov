@@ -45,61 +45,73 @@ class _AlbumViewState extends State<AlbumView> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.album.name!),
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: const Color.fromARGB(255, 46, 9, 121),
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Center(
-              child: Card(
-                child: 
-                  widget.album.image != "" ? 
-                    Image.network(widget.album.image!, fit: BoxFit.cover, width: 200, height: 200,) : 
-                    const Placeholder(),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color.fromARGB(255, 154, 161, 255),
+              Color.fromARGB(255, 46, 9, 121),
+            ],
+          )
+        ),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Center(
+                child: Card(
+                  child: 
+                    widget.album.image != "" ? 
+                      Image.network(widget.album.image!, fit: BoxFit.cover, width: 200, height: 200,) : 
+                      const Placeholder(),
+                ),
               ),
             ),
-          ),
-          Text(widget.album.name!, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-          Text(widget.album.artistName!, style: const TextStyle(fontSize: 15, fontStyle: FontStyle.italic, fontWeight: FontWeight.bold)),
-          Expanded(
-            child: 
-              onSearch ?
-              const CircularProgressorCustom() :
-              tracks.isEmpty ?
-              const Text('Aucun résultat') :
-              ListView.builder(
-              shrinkWrap: true,
-              padding: const EdgeInsets.all(8),
-              scrollDirection: Axis.vertical,
-              itemCount: tracks.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: GestureDetector(
-                    onTap: () {
-                      if (tracks[index].audio ==  "" || tracks[index].audio == null) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Ce morceau n\'est pas disponible'),
-                            backgroundColor: Colors.red,
-                        )
-                      );
-                      } else {
-                        Navigator.push(context,
-                          MaterialPageRoute(  
-                            builder: (BuildContext context) => SearchMusicView(song: tracks[index],)
+            Text(widget.album.name!, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            Text(widget.album.artistName!, style: const TextStyle(fontSize: 15, fontStyle: FontStyle.italic, fontWeight: FontWeight.bold)),
+            Expanded(
+              child: 
+                onSearch ?
+                const CircularProgressorCustom() :
+                tracks.isEmpty ?
+                const Text('Aucun résultat') :
+                ListView.builder(
+                shrinkWrap: true,
+                padding: const EdgeInsets.all(8),
+                scrollDirection: Axis.vertical,
+                itemCount: tracks.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        if (tracks[index].audio ==  "" || tracks[index].audio == null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Ce morceau n\'est pas disponible'),
+                              backgroundColor: Colors.red,
                           )
                         );
-                      }
-                    },
-                    child: TrackPreview(track: tracks[index])
-                  ),
-                );
-              }
+                        } else {
+                          Navigator.push(context,
+                            MaterialPageRoute(  
+                              builder: (BuildContext context) => SearchMusicView(song: tracks[index],)
+                            )
+                          );
+                        }
+                      },
+                      child: TrackPreview(track: tracks[index])
+                    ),
+                  );
+                }
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

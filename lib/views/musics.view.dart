@@ -1,6 +1,4 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:on_audio_query/on_audio_query.dart';
 import 'package:spoticlone/components/circular_progressor.component.dart';
 import 'package:spoticlone/components/mini_player.component.dart';
 import 'package:spoticlone/models/song_metadata.dart';
@@ -30,7 +28,10 @@ class _MusicsViewState extends State<MusicsView> {
   void getLocalMusics() async {
 
     print("getLocalMusics");
-    if (await Permission.storage.request().isGranted) {
+    dynamic permission = await Permission.storage.request();
+
+    print(permission);
+    // if (await Permission.storage.request().isGranted) {
       StorageService().getLocalMusics().then((songs) {
         setState(() {
           if (songs.isNotEmpty) {
@@ -39,11 +40,11 @@ class _MusicsViewState extends State<MusicsView> {
           loader = false;
         });
       });
-    } else if (await Permission.storage.request().isPermanentlyDenied) {
-      await openAppSettings();
-    } else if (await Permission.storage.request().isDenied) {
-      await Permission.storage.request();
-    }
+    // } else if (await Permission.storage.request().isPermanentlyDenied) {
+    //   // await openAppSettings();
+    // } else if (await Permission.storage.request().isDenied) {
+    //   await Permission.storage.request();
+    // }
   }
 
   @override

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class MiniPlayer extends StatefulWidget {
   final String title;
@@ -15,20 +13,30 @@ class _MiniPlayerState extends State<MiniPlayer> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Row(
-        children: [
-          const Icon(Icons.audiotrack),
-          Center(
-            child: Column(
-              children: [
-                Text(widget.title),
-                Text(widget.slogan),
-              ],
+      decoration: const BoxDecoration(
+        
+        color:Color.fromARGB(255, 154, 161, 255),
+      ),
+      child: SizedBox(
+        height: 50,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Icon(Icons.audiotrack, color: Colors.white),
+            Container(
+              child: Center(
+                child: Text(widget.title),
+              ),
             ),
-          ),
-          const Icon(Icons.play_arrow),
-          const Icon(Icons.skip_next)
-        ],
+            const Row(
+              children: [
+                Icon(Icons.skip_previous, color: Colors.white),
+                Icon(Icons.play_arrow, color: Colors.white),
+                Icon(Icons.skip_next, color: Colors.white)
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

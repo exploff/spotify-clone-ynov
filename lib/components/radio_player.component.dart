@@ -6,7 +6,6 @@ import 'controlbuttons.component.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:spoticlone/models/position_data.model.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:spoticlone/models/player_data.model.dart';
 
 class RadioPlayer extends StatefulWidget {
 

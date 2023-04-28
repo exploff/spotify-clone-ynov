@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:spoticlone/components/circular_progressor.component.dart';
 import 'package:spoticlone/components/track_preview.component.dart';
 import 'package:spoticlone/models/album.mode.dart';
@@ -94,11 +92,12 @@ class _SearchViewState extends State<SearchView> {
           height: 200,
           child: Column(
             children: [
-              Row(
+              const SizedBox(height: 10,),
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.start,
-                children: const [
-                  Padding(padding: EdgeInsets.only(left: 10, top: 10)),
-                  Text("Top Albums", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),)
+                children: [
+                  Padding(padding: EdgeInsets.only(left: 20, top: 20)),
+                  Text("Top Albums", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),)
                 ]
               ),
               Expanded(
@@ -135,7 +134,14 @@ class _SearchViewState extends State<SearchView> {
                 margin: const EdgeInsets.all(10),
                 child: Column(
                   children: [
-                    const Text("Recherche un son"),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Padding(padding: EdgeInsets.only(left: 20, top: 20)),
+                        Text("Recherche un son", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),),
+                      ]
+                    ),
+                    const SizedBox(height: 20),
                     Form(
                       key: _formKey,
                       child: Row(
@@ -168,14 +174,17 @@ class _SearchViewState extends State<SearchView> {
                               )
                               .toList(),
                               searchInputDecoration: InputDecoration(
+                                prefixIcon: const Icon(Icons.music_note),
+                                prefixIconColor: const Color.fromARGB(255, 154, 161, 255),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                filled: true,
+                                fillColor: const Color.fromARGB(176, 255, 255, 255),
                                 focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                  color: Colors.red.withOpacity(0.8),
-                                  ),
-                                ),
-                                border: const OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.red),
-                                ),
+                                  borderRadius: BorderRadius.circular(30),
+                                  borderSide:  const BorderSide(color: Color.fromARGB(255, 154, 161, 255),),
+                                )
                               ),
                             ),
                           ),
@@ -191,6 +200,14 @@ class _SearchViewState extends State<SearchView> {
                                   print(_searchController.text);
                                 }
                               },
+                              style: ButtonStyle(
+                                padding: MaterialStateProperty.all(EdgeInsets.zero),
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(const Color.fromARGB(255, 154, 161, 255),),
+                                shape: MaterialStateProperty.all<CircleBorder>(
+                                  const CircleBorder()
+                                ),
+                              ),
                               child: const Icon(Icons.search),
                             ), 
                           ),
@@ -203,7 +220,7 @@ class _SearchViewState extends State<SearchView> {
               onSearchSubmit ?
               const CircularProgressorCustom() :
               tracks.isEmpty ?
-              const Text('Aucun résultat') :
+              const Text("Aucun resultat", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),) :
               Expanded(
                 child: ListView.builder(
                   shrinkWrap: true,
@@ -230,7 +247,14 @@ class _SearchViewState extends State<SearchView> {
                             );
                           }
                         },
-                        child: TrackPreview(track: tracks[index])
+                        child: Column(
+                          children: [
+                            TrackPreview(track: tracks[index]),
+                            index < tracks.length - 1 ?
+                            Divider(color: Colors.white, height: 25, thickness: 1,):
+                              Container()
+                          ],
+                        )
                       ),
                     );
                   }

@@ -2,7 +2,6 @@ import 'package:spoticlone/models/album.mode.dart';
 import 'package:spoticlone/models/track.model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
-import 'dart:convert' show utf8;
 
 class JamendoHttp {
 

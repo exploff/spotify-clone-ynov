@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:spoticlone/components/circular_progressor.component.dart';
 import 'package:spoticlone/components/radio_preview.component.dart';
 import 'package:spoticlone/models/player_data.model.dart';

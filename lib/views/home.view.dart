@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:spoticlone/views/musics.view.dart';
 import 'package:spoticlone/views/list_radio.view.dart';
 import 'package:spoticlone/views/search.view.dart';

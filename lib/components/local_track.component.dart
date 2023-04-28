@@ -1,10 +1,4 @@
-import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:flutter_media_metadata/flutter_media_metadata.dart';
-import 'package:on_audio_query/on_audio_query.dart';
 import 'package:spoticlone/models/song_metadata.dart';
 
 class LocalTrackPreview extends StatefulWidget {
@@ -32,23 +26,6 @@ class _LocalTrackPreviewState extends State<LocalTrackPreview> {
   @override
   Widget build(BuildContext context) {
 
-    // return
-    //   Center(
-    //   child: Card(
-    //     child: Column(
-    //       mainAxisSize: MainAxisSize.min,
-    //       children: [
-    //         ListTile(
-    //           leading: const CircleAvatar(
-    //             child: Icon(Icons.audiotrack)
-    //           ),
-    //           title: Text(widget.songFile.trackName!),
-    //           subtitle: Text(widget.songFile.albumName??""),
-    //         ),
-    //       ],
-    //     ),
-    //   ),
-    // );
     return Center(
       child: Row(
         children: [
