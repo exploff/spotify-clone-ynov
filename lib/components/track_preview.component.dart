@@ -15,41 +15,15 @@ class TrackPreview extends StatefulWidget {
 class _TrackPreviewState extends State<TrackPreview> {
 
   bool onDownload = false;
+  final _storageService = StorageService();
 
-  void downloadMusic() async {
-    //if (await Permission.storage.request().isGranted) {
-        
-      if (onDownload) return;
 
-      setState(() {
-        onDownload = true;
-      });
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Téléchargement en cours'),
-          backgroundColor: Colors.amber,
-        )
-      ); 
-
-      StorageService().downloadMusic(widget.track).then(
-        (value) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(value ? 'Téléchargement réussi' : 'Téléchargement échoué'),
-              backgroundColor: value ? Colors.green : Colors.red,
-            )
-          );
-          setState(() {
-            onDownload = false;
-          });  
-        }
-      );
-    // } else if (await Permission.storage.request().isPermanentlyDenied) {
-    //   await openAppSettings();
-    // } else if (await Permission.storage.request().isDenied) {
-    //   await Permission.storage.request();
-    // }
+  void downloadMusic() async { 
+    setState(() {
+      onDownload = true;
+    });
+    
+    _storageService.startDownloading(widget.track);
   }
 
   @override
@@ -67,17 +41,45 @@ class _TrackPreviewState extends State<TrackPreview> {
           Expanded(
             child: Column(
               children: [
-                Text(widget.track.name!.length > 20 ? '${widget.track.name!.substring(0, 20)} ...' : widget.track.name!, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.white), ),
-                Text('Artiste : ${widget.track.artistName!}', style: const TextStyle(fontSize: 10, color: Colors.white)),
+                Text(widget.track.name!.length > 20 ? '${widget.track.name!.substring(0, 20)} ...' : widget.track.name!, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 17, color: Colors.white), ),
+                Text('Artiste : ${widget.track.artistName!}', style: const TextStyle(fontSize: 12, color: Colors.white)),
               ],
             )
           ),
-          widget.track.audio != "" ? IconButton(
-            icon: onDownload ? const Icon(Icons.pending) : const Icon(Icons.download),
-            color: Color.fromARGB(255, 154, 161, 255),
-            onPressed: () {
-              downloadMusic();
-            },)
+          widget.track.audio != "" ? Column(
+            children: [
+              IconButton(
+                icon: 
+                const Icon(Icons.download),
+                color: const Color.fromARGB(255, 154, 161, 255),
+                onPressed: () {
+                  downloadMusic();
+                },
+              ),
+              ValueListenableBuilder<bool>(
+                valueListenable: _storageService.downloadNotifier,
+                builder: (context, value, child) {
+                  if (value) {
+                    return Center(
+                      child: SizedBox(
+                        width: 80,
+                        child: ValueListenableBuilder<double?>(
+                          valueListenable: _storageService.progressNotifier,
+                          builder: (context, percent, child) {
+                            return LinearProgressIndicator(
+                              value: percent,
+                            );
+                          },
+                        ),
+                      ),
+                    );
+                  } else {
+                    return Container();
+                  }
+                },
+              )
+            ],
+          )
           : IconButton(
             icon: const Icon(Icons.error, color: Color.fromARGB(255, 154, 161, 255),),
             onPressed: () {

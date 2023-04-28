@@ -251,7 +251,7 @@ class _SearchViewState extends State<SearchView> {
                           children: [
                             TrackPreview(track: tracks[index]),
                             index < tracks.length - 1 ?
-                            Divider(color: Colors.white, height: 25, thickness: 1,):
+                            const Divider(color: Colors.white, height: 25, thickness: 1,):
                               Container()
                           ],
                         )

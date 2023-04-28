@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:flutter_media_metadata/flutter_media_metadata.dart';
 import 'package:http/http.dart' as http;
 import 'package:spoticlone/models/song_metadata.dart';
@@ -29,6 +30,59 @@ class StorageService {
       print("LOG : $e");
       return false;
     }
+  }
+
+  final progressNotifier = ValueNotifier<double?>(0);
+  final downloadNotifier = ValueNotifier<bool>(false);
+
+  void startDownloading(Track track) async {
+    progressNotifier.value = null;
+    downloadNotifier.value = true;
+
+    var url = track.audio!;
+    final request = http.Request('GET', Uri.parse(url));
+    final http.StreamedResponse response = await http.Client().send(request);
+
+    final contentLength = response.contentLength;
+    // final contentLength = double.parse(response.headers['x-decompressed-content-length']);
+
+    progressNotifier.value = 0;
+
+    List<int> bytes = [];
+    var fileName = track.name ?? "unknown _${DateTime.now()}";
+    String filePath = '$storageDir/${fileName}.mp3';
+    File file = File(filePath);
+
+    response.stream.listen(
+      (List<int> newBytes) {
+        bytes.addAll(newBytes);
+        final downloadedLength = bytes.length;
+        progressNotifier.value = downloadedLength / contentLength!;
+      },
+      onDone: () async {
+        progressNotifier.value = 0;
+        await file.writeAsBytes(bytes);
+        downloadNotifier.value = false;
+      },
+      onError: (e) {
+        debugPrint(e);
+      },
+      cancelOnError: true,
+    );
+  }
+
+  void saveMusic(List<int> bytes, Track track) {
+      Directory dir = Directory(storageDir);
+      if (!dir.existsSync()) {
+        dir.createSync(recursive: true);
+      }
+
+      var fileName = track.name ?? "unknown _${DateTime.now()}";
+
+      String filePath = '$storageDir/${fileName}.mp3';
+      
+      File file = File(filePath);
+      file.writeAsBytesSync(bytes);
   }
 
   Future<List<SongMetadata>> getLocalMusics() async {
